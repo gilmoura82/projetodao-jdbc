@@ -47,7 +47,7 @@ public class VendedorDAOJDBC implements VendedorDAO {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"select vendedor.*, departamento.nome as dep "
+					"select vendedor.*, departamento.nome as depnome "
 					+ "from vendedor join departamento "
 					+ "on vendedor.departamentoid = departamento.id "
 					+ "where vendedor.id = ?"
@@ -85,14 +85,49 @@ public class VendedorDAOJDBC implements VendedorDAO {
 	private Departamento instantiateDepartamento(ResultSet rs) throws SQLException {
 		Departamento dep = new Departamento();
 		dep.setId(rs.getInt("id"));
-		dep.setNome(rs.getString("nome"));
+		dep.setNome(rs.getString("depnome"));
 		return dep;
 	}
 
 	@Override
 	public List<Vendedor> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"select vendedor.*, departamento.nome as depnome "
+					+ " from vendedor "
+					+ " join departamento on vendedor.departamentoid = departamento.id "
+					+ "order by nome");
+			
+			
+			rs = st.executeQuery();
+			
+			List<Vendedor> list = new ArrayList<>();
+			Map<Integer, Departamento> map = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				Departamento dep = map.get(rs.getInt("departamentoid"));
+				
+				if (dep == null) {
+					dep = instantiateDepartamento(rs);
+					map.put(rs.getInt("departamentoid"), dep);
+				}
+				
+				
+				Vendedor obj = instantiateVendedor(rs, dep);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
@@ -110,7 +145,7 @@ public class VendedorDAOJDBC implements VendedorDAO {
 			st.setInt(1, departamento.getId());
 			rs = st.executeQuery();
 			
-			List<Vendedor> list = new ArrayList();
+			List<Vendedor> list = new ArrayList<>();
 			Map<Integer, Departamento> map = new HashMap<>();
 			
 			while (rs.next()) {
