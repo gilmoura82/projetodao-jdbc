@@ -1,19 +1,17 @@
 package Programa;
 
-import java.util.Date;
-
-import model.entities.Departamento;
+import model.dao.DaoFactory;
+import model.dao.VendedorDAO;
 import model.entities.Vendedor;
 
 public class Executar {
 	
 	public static void main(String[] args) {
 		
-		Departamento obj = new Departamento(1, "Livros");
-		Vendedor vendedor = new Vendedor(1, "Rob", "rob@gmail.com", new Date(),
-				3000.0, obj);
+		VendedorDAO vendedorDAO = DaoFactory.createVendedorDao();
 		
-		System.out.println(obj);
+		Vendedor vendedor = vendedorDAO.findById(8);
+		
 		System.out.println(vendedor);
 		
 	}

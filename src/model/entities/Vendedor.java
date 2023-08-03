@@ -11,21 +11,21 @@ public class Vendedor implements Serializable {
 	private Integer id;
 	private String nome;
 	private String email;
-	private Date dataaniversario;
-	private Double basesalario;
+	private Date datanascimento;
+	private Double salariobase;
 	
 	private Departamento departamento;
 	
 	public Vendedor() {
 	}
 
-	public Vendedor(Integer id, String nome, String email, Date dataaniversario, Double basesalario,
+	public Vendedor(Integer id, String nome, String email, Date datanascimento, Double salariobase,
 			Departamento departamento) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.dataaniversario = dataaniversario;
-		this.basesalario = basesalario;
+		this.datanascimento = datanascimento;
+		this.salariobase = salariobase;
 		this.departamento = departamento;
 	}
 
@@ -53,20 +53,20 @@ public class Vendedor implements Serializable {
 		this.email = email;
 	}
 
-	public Date getDataaniversario() {
-		return dataaniversario;
+	public Date getDatanascimento() {
+		return datanascimento;
 	}
 
-	public void setDataaniversario(Date dataaniversario) {
-		this.dataaniversario = dataaniversario;
+	public void setDataaniversario(Date datanascimento) {
+		this.datanascimento = datanascimento;
 	}
 
-	public Double getBasesalario() {
-		return basesalario;
+	public Double getSalariobase() {
+		return salariobase;
 	}
 
-	public void setBasesalario(Double basesalario) {
-		this.basesalario = basesalario;
+	public void setSalariobase(Double salariobase) {
+		this.salariobase = salariobase;
 	}
 
 	public Departamento getDepartamento() {
@@ -96,8 +96,8 @@ public class Vendedor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Vendedor [id=" + id + ", nome=" + nome + ", email=" + email + ", dataaniversario=" + dataaniversario
-				+ ", basesalario=" + basesalario + ", departamento=" + departamento + "]";
+		return "Vendedor [id=" + id + ", nome=" + nome + ", email=" + email + ", datanascimento=" + datanascimento
+				+ ", salariobase=" + salariobase + ", departamento=" + departamento + "]";
 	}
 	
 	
