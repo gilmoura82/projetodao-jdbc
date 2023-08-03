@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -81,8 +84,8 @@ public class VendedorDAOJDBC implements VendedorDAO {
 
 	private Departamento instantiateDepartamento(ResultSet rs) throws SQLException {
 		Departamento dep = new Departamento();
-		dep.setId(rs.getInt("departamentoid"));
-		dep.setNome(rs.getString("dep"));
+		dep.setId(rs.getInt("id"));
+		dep.setNome(rs.getString("nome"));
 		return dep;
 	}
 
@@ -90,6 +93,48 @@ public class VendedorDAOJDBC implements VendedorDAO {
 	public List<Vendedor> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Vendedor> findByDepartamento(Departamento departamento) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"select vendedor.*, departamento.nome as depnome "
+					+ " from vendedor "
+					+ " join departamento on vendedor.departamentoid = departamento.id "
+					+ " where departamentoid = ? "
+					+ "order by nome");
+			
+			st.setInt(1, departamento.getId());
+			rs = st.executeQuery();
+			
+			List<Vendedor> list = new ArrayList();
+			Map<Integer, Departamento> map = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				Departamento dep = map.get(rs.getInt("departamentoid"));
+				
+				if (dep == null) {
+					dep = instantiateDepartamento(rs);
+					map.put(rs.getInt("departamentoid"), dep);
+				}
+				
+				
+				Vendedor obj = instantiateVendedor(rs, dep);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 }
