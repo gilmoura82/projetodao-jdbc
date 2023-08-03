@@ -10,6 +10,7 @@ public class Executar {
 		
 		VendedorDAO vendedorDAO = DaoFactory.createVendedorDao();
 		
+		System.out.println("=== TESTE 1: vendedor findById ===");
 		Vendedor vendedor = vendedorDAO.findById(8);
 		
 		System.out.println(vendedor);
