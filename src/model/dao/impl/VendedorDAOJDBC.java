@@ -29,7 +29,7 @@ public class VendedorDAOJDBC implements VendedorDAO {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"insert into vendedor "
+					"insert into vendedores "
 					+ "(nome, email, datanascimento, salariobase, departamentoid) "
 					+ "values " 
 					+ "(?, ?, ?, ?, ?)",
@@ -66,7 +66,29 @@ public class VendedorDAOJDBC implements VendedorDAO {
 
 	@Override
 	public void update(Vendedor obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"update vendedores "
+					+ " set nome = ?, email = ?, datanascimento = ?, salariobase = ?, departamentoid = ? "
+					+ " where id = ? ");		
+					
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getDatanascimento().getTime()));
+			st.setDouble(4, obj.getSalariobase());
+			st.setInt(5, obj.getDepartamento().getId());
+			st.setInt(6, obj.getId());
+			
+			st.executeUpdate();
+					
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -82,10 +104,10 @@ public class VendedorDAOJDBC implements VendedorDAO {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"select vendedor.*, departamento.nome as depnome "
-					+ "from vendedor join departamento "
-					+ "on vendedor.departamentoid = departamento.id "
-					+ "where vendedor.id = ?"
+					"select vendedores.*, departamento.nome as depnome "
+					+ "from vendedores join departamento "
+					+ "on vendedores.departamentoid = departamento.id "
+					+ "where vendedores.id = ?"
 					+ "order by id");
 			
 			st.setInt(1, id);
@@ -130,9 +152,9 @@ public class VendedorDAOJDBC implements VendedorDAO {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"select vendedor.*, departamento.nome as depnome "
-					+ " from vendedor "
-					+ " join departamento on vendedor.departamentoid = departamento.id "
+					"select vendedores.*, departamento.nome as depnome "
+					+ " from vendedores "
+					+ " join departamento on vendedores.departamentoid = departamento.id "
 					+ "order by nome");
 			
 			
@@ -171,9 +193,9 @@ public class VendedorDAOJDBC implements VendedorDAO {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"select vendedor.*, departamento.nome as depnome "
-					+ " from vendedor "
-					+ " join departamento on vendedor.departamentoid = departamento.id "
+					"select vendedores.*, departamento.nome as depnome "
+					+ " from vendedores "
+					+ " join departamento on vendedores.departamentoid = departamento.id "
 					+ " where departamentoid = ? "
 					+ "order by nome");
 			

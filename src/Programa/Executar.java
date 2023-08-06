@@ -37,6 +37,15 @@ public class Executar {
 		Vendedor novoVendedor = new Vendedor(null, "Carlos Eduardo", "carlosedu@email.com", new Date(), 4000.0, departamento);
 		vendedorDAO.insert(novoVendedor);
 		System.out.println("Novo Id inserido: " + novoVendedor.getId() + "\n" + "Vendedor: " + novoVendedor.getNome());
+		
+		System.out.println("\n=== TESTE 5: vendedor update ===");
+		vendedor = vendedorDAO.findById(1);
+		vendedor.setNome("Carlos Moraes");
+		vendedorDAO.update(vendedor);
+		System.out.println("Vendedor atualizado: " + vendedor.getNome());
+		System.out.println("Atualização concluída");
+		
+		
 	}
 
 }
