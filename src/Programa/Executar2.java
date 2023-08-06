@@ -26,7 +26,7 @@ public class Executar2 {
 		Departamento departamento = departamentoDao.findById(1);
 		System.out.println(departamento);
 		
-		System.out.println("\n=== TESTE 3: Departamento insert ===");
+		System.out.println("\n=== TESTE 3: Departamento insert no banco de dados ===");
 		Departamento novoDepartamento = new Departamento(null, "Utilidades Para O Lar");
 		departamentoDao.insert(novoDepartamento);
 		System.out.println("Novo Id inserido: " + novoDepartamento.getId() + "\n" + "Departamento: " + novoDepartamento.getNome());
