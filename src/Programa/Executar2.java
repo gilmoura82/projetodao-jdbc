@@ -31,14 +31,14 @@ public class Executar2 {
 		departamentoDao.insert(novoDepartamento);
 		System.out.println("Novo Id inserido: " + novoDepartamento.getId() + "\n" + "Departamento: " + novoDepartamento.getNome());
 		
-		System.out.println("\n=== TESTE 4: Departamento update ===");
+		System.out.println("\n=== TESTE 4: Departamento update no banco de dados ===");
 		departamento = departamentoDao.findById(1);
 		departamento.setNome("Computadores & Celulares");
 		departamentoDao.update(departamento);
 		System.out.println("Departamento atualizado: " + departamento.getNome());
 		System.out.println("Atualização concluída");
 		
-		System.out.println("\n=== TESTE 5: Departamento delete ===");
+		System.out.println("\n=== TESTE 5: Departamento delete no banco de dados ===");
 		System.out.println("Insira o código do departamento para excluir: ");
 		int id = sc.nextInt();
 		departamentoDao.deleteById(id);
