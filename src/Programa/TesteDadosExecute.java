@@ -7,7 +7,7 @@ import java.sql.Statement;
 import db.DB;
 import db.DbException;
 
-public class TesteDadosExecutar {
+public class TesteDadosExecute {
 
 	public static void main(String[] args) {
 
