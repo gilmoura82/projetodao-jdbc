@@ -9,7 +9,7 @@ import model.dao.VendedorDAO;
 import model.entities.Departamento;
 import model.entities.Vendedor;
 
-public class Executar {
+public class Executar1 {
 	
 	public static void main(String[] args) {
 		
